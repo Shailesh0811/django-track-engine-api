@@ -1,5 +1,11 @@
 from django.http import HttpResponse
-from issues.models import Reporter, Issue
+from issues.models import (
+    Critical,
+    Issue,
+    LowPriority,
+    MediumPriority,
+    Reporter,
+)
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -24,9 +30,12 @@ def issues_handler(request):
         else:
             issues = Issue.get_all_issues(Issue)
             return Response(issues)
+
+    #POST  /api/issues/  —  Create a new issue and in message describe the issue on the basis of priority
+
     elif request.method == 'POST':
         data = request.data
-        priority = data['priority']
+        priority = data.get('priority', '')
         if priority == 'high':
             issue = Critical(**data)
         elif priority == 'medium':
@@ -35,7 +44,16 @@ def issues_handler(request):
             issue = LowPriority(**data)
         else:
             issue = Issue(**data)
-        return Response({"issue": issue.describe()})
+        try:
+            saved = issue.persist()
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
+        return Response(
+            {
+                "issue Created Successfully": saved,
+                "issue": issue.describe(),
+            }
+        )
 
 
 @api_view(['POST', 'GET'])

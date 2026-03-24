@@ -80,23 +80,26 @@ class Issue(BaseEntity):
         return f"{self.title} [{self.priority}]"
 
     def get_all_issues(self):
-        with open(ISSUES_FILE, 'r') as f:
-            return json.load(f) 
+        return _load_json_array(ISSUES_FILE)
 
     def get_issue_by_id(self, id):
-        with open(ISSUES_FILE, 'r') as f:
-            issues = json.load(f)
-            print(issues)
-            for issue in issues:
-                print(issue['id'])
-                if issue['id'] == int(id):
-                    return issue
-            return None
+        issues = _load_json_array(ISSUES_FILE)
+        for issue in issues:
+            if issue['id'] == int(id):
+                return issue
+        return None
 
     def get_issues_by_status(self, status):
-        with open(ISSUES_FILE, 'r') as f:
-            issues = json.load(f)
-            return [issue for issue in issues if issue['status'] == status]
+        issues = _load_json_array(ISSUES_FILE)
+        return [issue for issue in issues if issue['status'] == status]
+
+    def persist(self):
+        self.validate()
+        issues = _load_json_array(ISSUES_FILE)
+        issues.append(self.to_dict())
+        with open(ISSUES_FILE, 'w') as f:
+            json.dump(issues, f)
+        return self.to_dict()
 
 class Bug(Issue):
     def describe(self):
