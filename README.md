@@ -58,3 +58,27 @@ If anything here drifts from the code, trust the code — this is just how I rem
 Screenshot of Enpoints tested in Postman
 
 1. Get All Issues
+<img width="1500" height="998" alt="image" src="https://github.com/user-attachments/assets/39562d11-61ce-4220-8b22-1e765d7453b8" />
+
+2. Get issue by Id (Success)
+<img width="1021" height="733" alt="image" src="https://github.com/user-attachments/assets/e4770c25-b02d-4c42-86d4-4e04d4af78b5" />
+
+3. Get issue by id (Fail)
+<img width="1021" height="759" alt="image" src="https://github.com/user-attachments/assets/d6fff13b-e956-4a00-acf3-b6f3b4dca22c" />
+
+4. Get issue by status
+<img width="1022" height="760" alt="image" src="https://github.com/user-attachments/assets/5f5bc44f-239c-459a-942e-c1091d65cffa" />
+
+5. Create a reported
+<img width="1020" height="756" alt="image" src="https://github.com/user-attachments/assets/0a074a5f-4fdd-4716-bc73-53020024695f" />
+
+6. Get reporter by id (Success)
+<img width="1015" height="755" alt="image" src="https://github.com/user-attachments/assets/aec12b43-fdec-4c15-8d3e-78afcca02880" />
+
+7. Get reporter by id (Fail)
+<img width="1020" height="758" alt="image" src="https://github.com/user-attachments/assets/9da711b1-81d9-4e19-ab26-23ef5179b25c" />
+
+
+
+
+
