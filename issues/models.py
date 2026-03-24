@@ -7,6 +7,19 @@ REPORTERS_FILE = '/Users/shaileshmohite/Documents/AirTribe/django-track-engine-a
 
 from abc import ABC, abstractmethod
 
+
+def _load_json_array(path):
+    """Return a list from JSON file; empty or invalid files become []."""
+    try:
+        with open(path, 'r') as f:
+            raw = f.read().strip()
+            if not raw:
+                return []
+            data = json.loads(raw)
+            return data if isinstance(data, list) else []
+    except (FileNotFoundError, json.JSONDecodeError, TypeError):
+        return []
+
 class BaseEntity(ABC):
     @abstractmethod
     def validate(self):
@@ -30,6 +43,24 @@ class Reporter(BaseEntity):
             raise ValueError("Name is required")
         if '@' not in self.email:
             raise ValueError('Invalid email')
+
+    def persist(self):
+        self.validate()
+        reporters = _load_json_array(REPORTERS_FILE)
+        reporters.append(self.to_dict())
+        with open(REPORTERS_FILE, 'w') as f:
+            json.dump(reporters, f)
+        return self.to_dict()
+
+    def get_reporter_by_id(self, id):
+        reporters = _load_json_array(REPORTERS_FILE)
+        for reporter in reporters:
+            if reporter['id'] == int(id):
+                return reporter
+        return None
+
+    def get_all_reporters(self):
+        return _load_json_array(REPORTERS_FILE)
 
 class Issue(BaseEntity):
     def __init__(self, id, title, description, status, priority, reporter_id, created_at):

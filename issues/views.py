@@ -6,11 +6,6 @@ from rest_framework.decorators import api_view
 
 
 
-def index(request):
-    return HttpResponse("Issues app is ready.")
-
-#In your POST /api/issues/ view, instantiate the correct subclass based on priority and include describe() in the response. For medium and high priority, use the base Issue class.
-
 @api_view(['GET', 'POST'])
 def issues_handler(request):
     if request.method == 'GET':
@@ -43,3 +38,21 @@ def issues_handler(request):
         return Response({"issue": issue.describe()})
 
 
+@api_view(['POST', 'GET'])
+def reporters_handler(request):
+    if request.method == 'GET':
+        id = request.query_params.get('id')
+        if id:
+            reporter = Reporter.get_reporter_by_id(Reporter,id)
+            if reporter:
+                return Response(reporter)
+            else:
+                return Response({"error": "Reporter not found"}, status=404)
+        else:
+            reporters = Reporter.get_all_reporters(Reporter)
+            return Response(reporters)
+    if request.method == 'POST':
+        data = request.data
+        reporter = Reporter(**data)
+        saved = reporter.persist()
+        return Response({"reporter Created Successfully": saved})

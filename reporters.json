@@ -1,20 +1,20 @@
 [
     {
-        "id": 1,
-        "name": "Shailesh Mohite",
-        "email": "shailesh@example.com",
-        "team": "Backend"
+        "id": 4,
+        "name": "Shailesh Smith",
+        "email": "Shailesh@example.com",
+        "team": "Design"
     },
     {
-        "id": 2,
-        "name": "John Doe",
-        "email": "john@example.com",
-        "team": "Frontend"
+        "id": 4,
+        "name": "Shailesh Smith",
+        "email": "Shailesh@example.com",
+        "team": "Design"
     },
     {
-        "id": 3,
-        "name": "Jane Smith",
-        "email": "jane@example.com",
+        "id": 5,
+        "name": "Ram Smith",
+        "email": "Shailesh@example.com",
         "team": "Design"
     }
 ]
